@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绵绵题库（游戏版）</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <link rel="stylesheet" href="app.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.0.6/tsparticles.slim.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+    <div id="tsparticles"></div>
+
+    <header>
+        <div style="flex:1; cursor: pointer;" 
+             onclick="if(confirm('即将离开卡片机，前往作者主页 (../index.html)\n确定要跳转吗？')) window.location.href='../index.html'" 
+             title="返回主页">
+            
+            <h2 style="margin:0;font-size:1.2rem;">AI 知识卡片机(@绵绵)</h2>
+            <div class="xp-bar-bg"><div class="xp-bar-fill" id="xpBar"></div></div>
+            <div class="stats-text">
+                XP: <span id="scoreVal">0</span> | 已掌握: <span id="masteredCount">0</span> / <span id="totalCount">0</span>
+            </div>
+            
+        </div>
+    </header>
+
+    <div style="text-align:center;margin-bottom:20px;">
+        <button id="camBtn" onclick="window.gestureSystem.toggleCamera()" class="btn-cam">
+            📷 开启手势控制 (Beta)
+        </button>
+        <div class="gesture-guide">
+            👋 左挥:翻转 | ➡️ 右挥:下一张 | ⬆️ 上挥:全翻 | ⬇️ 下挥:抽卡
+        </div>
+    </div>
+
+    <div id="videoContainer" class="video-overlay">
+        <video id="webcam" autoplay playsinline></video>
+        <canvas id="output_canvas"></canvas>
+        <div id="gestureFeedback" class="gesture-hint">等待手势...</div>
+    </div>
+
+    <div class="action-area">
+          <button class="btn-draw" onclick="window.gachaSystem.draw(1)">🔮 单抽</button>
+          <button class="btn-draw" onclick="window.gachaSystem.draw(5)">🌟 五连抽</button>
+          
+          <button class="btn-draw purple-btn" onclick="window.gachaSystem.draw(10)">🚀 十连抽</button>
+          
+          <button class="btn-draw blue-btn" onclick="window.gachaSystem.openAlbum()">📖 图鉴</button>
+          <button class="btn-draw ghost-btn" onclick="window.gachaSystem.resetProgress()">🗑️ 重置</button>
+    </div>
+
+    <div class="pool-container" id="cardContainer">
+        <div class="empty-tip">点击按钮抽取知识点...</div>
+    </div>
+
+    <div id="albumModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🏆 知识图鉴</h2>
+                <span onclick="document.getElementById('albumModal').style.display='none'" class="close-btn">&times;</span>
+            </div>
+            <div class="album-grid" id="albumGrid"></div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    
+    <script type="module" src="app.js"></script>
+
+</body>
+</html>
