@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绵绵题库</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/app.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.0.6/tsparticles.slim.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    <div id="tsparticles"></div>
+
+    <header>
+        <div style="flex:1;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2 style="margin:0;font-size:1.2rem; cursor:pointer;" onclick="window.location.href='index.html'">⬅️ 返回首页</h2>
+                <button id="modeBtn" onclick="window.quizSystem.toggleReviewMode()" class="btn-draw" style="padding:5px 15px; font-size:0.9rem;">
+                    📖 切换至刷题模式
+                </button>
+            </div>
+            <div class="xp-bar-bg"><div class="xp-bar-fill" id="xpBar"></div></div>
+            <div class="stats-text">XP: <span id="scoreVal">0</span> | 连对: <span id="streakVal">0</span></div>
+        </div>
+    </header>
+
+    <div style="text-align:center;margin-bottom:20px;">
+        <button id="camBtn" onclick="window.quizGesture.toggleCamera()" class="btn-cam">📷 开启手势答题</button>
+        <div class="gesture-guide">👋 挥手: 提交/翻牌 | ➡️ 右挥: 下一题</div>
+    </div>
+    <div id="videoContainer" class="video-overlay">
+        <video id="webcam" autoplay playsinline></video>
+        <canvas id="output_canvas"></canvas>
+        <div id="gestureFeedback" class="gesture-hint">等待手势...</div>
+    </div>
+
+    <div class="main-content-area">
+        <div id="cardModeContainer" class="quiz-container">
+            <div id="quizCardWrapper" class="card-wrapper" style="width: 320px; height: 450px;">
+                <div class="card-inner">
+                    <div class="card-face card-front" id="questionFace">
+                        <div class="quiz-type-badge" id="quizType">加载中</div>
+                        <div style="text-align:center; margin-bottom:15px; font-size:3rem;" id="quizIcon">🤔</div>
+                        <div class="quiz-content">
+                            <div class="quiz-question" id="quizQuestionText">点击开始挑战...</div>
+                            <div id="quizInputArea" class="quiz-options">
+                                <button class="btn-draw" onclick="window.quizSystem.nextQuestion()">开始挑战</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-face card-back" id="answerFace">
+                        <h3 id="resultTitle" style="text-align:center;"></h3>
+                        <div style="padding:10px; background:rgba(255,255,255,0.1); border-radius:5px; margin-bottom:10px;">
+                            <strong>✅ 正确答案：</strong>
+                            <div id="correctAnswer" style="color:#ffd700; font-size:1.1rem; margin-top:5px;"></div>
+                        </div>
+                        <div style="font-size:0.9rem; color:#ccc;">
+                            <strong>解析：</strong>
+                            <p id="answerExplanation"></p>
+                        </div>
+                        <div style="margin-top:auto;">
+                            <button class="btn-draw" style="width:100%" onclick="window.quizSystem.nextQuestion()">下一题 (➡️)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="listModeContainer" class="review-list-container" style="display:none;">
+            <div class="review-filters">
+                <button onclick="window.quizSystem.filterReview('all')" class="filter-btn active">全部</button>
+                <button onclick="window.quizSystem.filterReview('choice')" class="filter-btn">选择题</button>
+                <button onclick="window.quizSystem.filterReview('fill')" class="filter-btn">填空题</button>
+                <button onclick="window.quizSystem.filterReview('qa')" class="filter-btn">简答题</button>
+            </div>
+            <div id="reviewListContent" class="review-grid">
+                </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/quiz.js"></script>
+    
+    <script src="js/loader.js"></script>
+
+</body>
+</html>
